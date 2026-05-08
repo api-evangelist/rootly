@@ -23,6 +23,8 @@ apis:
     properties:
       - type: Documentation
         url: https://rootly.com/docs
+      - url: openapi/rootly-openapi.yml
+        type: OpenAPI
 common:
   - type: Website
     url: https://rootly.com
