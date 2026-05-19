@@ -1,127 +1,142 @@
 aid: rootly
 name: Rootly
-description: >-
-  Rootly is an incident management platform that automates incident response workflows and integrates with existing tools.
+description: Rootly is an incident management platform that automates incident response workflows and integrates with existing
+  tools.
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - AIOps
-  - Incident Management
-url: >-
-  https://raw.githubusercontent.com/api-evangelist/rootly/refs/heads/main/apis.yml
+- AIOps
+- Incident Management
+url: https://raw.githubusercontent.com/api-evangelist/rootly/refs/heads/main/apis.yml
 created: '2026-03-27'
-modified: '2026-03-27'
+modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: rootly:rootly
-    name: Rootly
-    description: >-
-      Rootly is an incident management platform that automates incident response workflows and integrates with existing tools.
-    humanURL: https://rootly.com
-    tags:
-      - AIOps
-    properties:
-      - type: Documentation
-        url: https://rootly.com/docs
-      - url: openapi/rootly-openapi.yml
-        type: OpenAPI
-common:
-  - type: Website
-    url: https://rootly.com
+- aid: rootly:rootly
+  name: Rootly
+  description: Rootly is an incident management platform that automates incident response workflows and integrates with existing
+    tools.
+  humanURL: https://rootly.com
+  tags:
+  - AIOps
+  properties:
   - type: Documentation
     url: https://rootly.com/docs
-  - type: Integrations
-    url: https://rootly.com/integrations
+  - url: openapi/rootly-openapi.yml
+    type: OpenAPI
+  - type: NaftikoCapability
+    url: capabilities/rootly-alerts.yaml
+  - type: NaftikoCapability
+    url: capabilities/rootly-escalation-policies.yaml
+  - type: NaftikoCapability
+    url: capabilities/rootly-incidents.yaml
+  - type: NaftikoCapability
+    url: capabilities/rootly-services.yaml
+  - type: NaftikoCapability
+    url: capabilities/rootly-teams.yaml
+  - type: NaftikoCapability
+    url: capabilities/rootly-users.yaml
+  - type: NaftikoCapability
+    url: capabilities/rootly-workflows.yaml
+common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/rootlyhq
+- type: Website
+  url: https://rootly.com
+- type: Documentation
+  url: https://rootly.com/docs
+- type: Integrations
+  url: https://rootly.com/integrations
 integrations:
-  - name: burger menu
-  - name: burger menu icon_close
-  - name: Live mode on the Alerts view.
-  - name: Poll Everywhere
-  - name: KnowBe4
-  - name: Achievers
-  - name: Momentum
-  - name: Motive
-  - name: Clay
-  - name: Webflow
-  - name: Wealthsimple
-  - name: Replit
-  - name: Upstart
-  - name: ROLLER
-  - name: Lucidworks
-  - name: Anthropic
-  - name: AWS CloudWatch
-  - name: AWS Eventbridge
-  - name: Cortex
-  - name: Datadog
-  - name: GitHub
-  - name: Linear
-  - name: Notion
-  - name: Sentry
-  - name: Slack
-  - name: Terraform
-  - name: Zoom
-  - name: Generic Webhook Alert Source
-  - name: Google Cloud
-  - name: Opsgenie (end of life)
-  - name: PagerDuty
-  - name: PagerTree
-  - name: Prometheus Alertmanager
-  - name: VictorOps
-  - name: Azure OpenAI
-  - name: Email
-  - name: Fivetran
-  - name: Glean
-  - name: Google Gemini
-  - name: Mistral AI
-  - name: OpenAI
-  - name: SendGrid
-  - name: ServiceNow
-  - name: SMTP
-  - name: Superplane
-  - name: Zapier
-  - name: Backstage
-  - name: OpsLevel
-  - name: AWS SNS
-  - name: Google Meet
-  - name: Mattermost
-  - name: Microsoft Teams
-  - name: Pylon
-  - name: statuspage.io
-  - name: Webex
-  - name: AWS Elastic Beanstalk
-  - name: Gitlab
-  - name: Heroku
-  - name: Kubernetes
-  - name: Pulumi
-  - name: Dynatrace
-  - name: Grafana
-  - name: Honeycomb
-  - name: NewRelic
-  - name: Nobl9
-  - name: Rollbar
-  - name: Splunk
-  - name: Airtable
-  - name: Coda
-  - name: Confluence Cloud
-  - name: Dropbox Paper
-  - name: Google Docs
-  - name: Outlook
-  - name: Quip
-  - name: SharePoint
-  - name: Asana
-  - name: ClickUp
-  - name: Freshservice
-  - name: Jira Cloud
-  - name: Motion
-  - name: Shortcut
-  - name: Trello
-  - name: Zendesk
-  - name: Google Calendar
-  - name: GoToMeeting
-  - name: HashiCorp Vault
-  - name: Looker
-  - name: SSO/SCIM
-  - name: Workday
+- name: burger menu
+- name: burger menu icon_close
+- name: Live mode on the Alerts view.
+- name: Poll Everywhere
+- name: KnowBe4
+- name: Achievers
+- name: Momentum
+- name: Motive
+- name: Clay
+- name: Webflow
+- name: Wealthsimple
+- name: Replit
+- name: Upstart
+- name: ROLLER
+- name: Lucidworks
+- name: Anthropic
+- name: AWS CloudWatch
+- name: AWS Eventbridge
+- name: Cortex
+- name: Datadog
+- name: GitHub
+- name: Linear
+- name: Notion
+- name: Sentry
+- name: Slack
+- name: Terraform
+- name: Zoom
+- name: Generic Webhook Alert Source
+- name: Google Cloud
+- name: Opsgenie (end of life)
+- name: PagerDuty
+- name: PagerTree
+- name: Prometheus Alertmanager
+- name: VictorOps
+- name: Azure OpenAI
+- name: Email
+- name: Fivetran
+- name: Glean
+- name: Google Gemini
+- name: Mistral AI
+- name: OpenAI
+- name: SendGrid
+- name: ServiceNow
+- name: SMTP
+- name: Superplane
+- name: Zapier
+- name: Backstage
+- name: OpsLevel
+- name: AWS SNS
+- name: Google Meet
+- name: Mattermost
+- name: Microsoft Teams
+- name: Pylon
+- name: statuspage.io
+- name: Webex
+- name: AWS Elastic Beanstalk
+- name: Gitlab
+- name: Heroku
+- name: Kubernetes
+- name: Pulumi
+- name: Dynatrace
+- name: Grafana
+- name: Honeycomb
+- name: NewRelic
+- name: Nobl9
+- name: Rollbar
+- name: Splunk
+- name: Airtable
+- name: Coda
+- name: Confluence Cloud
+- name: Dropbox Paper
+- name: Google Docs
+- name: Outlook
+- name: Quip
+- name: SharePoint
+- name: Asana
+- name: ClickUp
+- name: Freshservice
+- name: Jira Cloud
+- name: Motion
+- name: Shortcut
+- name: Trello
+- name: Zendesk
+- name: Google Calendar
+- name: GoToMeeting
+- name: HashiCorp Vault
+- name: Looker
+- name: SSO/SCIM
+- name: Workday
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

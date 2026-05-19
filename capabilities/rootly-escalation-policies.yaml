@@ -1,0 +1,105 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Rootly API — Escalation Policies
+  description: 'Rootly API — Escalation Policies. 2 operations. Lead operation: List escalation policies. Self-contained Naftiko
+    capability covering one Rootly business surface.'
+  tags:
+  - Rootly
+  - Escalation Policies
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ROOTLY_API_KEY: ROOTLY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rootly-escalation-policies
+    baseUri: https://api.rootly.com/v1
+    description: Rootly API — Escalation Policies business capability. Self-contained, no shared references.
+    resources:
+    - name: escalation-policies
+      path: /escalation-policies
+      operations:
+      - name: get
+        method: GET
+        description: List escalation policies
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: post
+        method: POST
+        description: Create escalation policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.ROOTLY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rootly-escalation-policies-rest
+    port: 8080
+    description: REST adapter for Rootly API — Escalation Policies. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/escalation-policies
+      name: escalation-policies
+      description: REST surface for escalation-policies.
+      operations:
+      - method: GET
+        name: get
+        description: List escalation policies
+        call: rootly-escalation-policies.get
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: post
+        description: Create escalation policy
+        call: rootly-escalation-policies.post
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rootly-escalation-policies-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Rootly API — Escalation Policies. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-escalation-policies
+      description: List escalation policies
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rootly-escalation-policies.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-escalation-policy
+      description: Create escalation policy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rootly-escalation-policies.post
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
