@@ -1,0 +1,920 @@
+"""
+Rootly GraphQL Schema
+Conceptual schema derived from the Rootly REST API (https://rootly.com/api)
+Rootly is an incident management platform that automates incident response workflows.
+"""
+
+scalar DateTime
+scalar JSON
+
+# ---------------------------------------------------------------------------
+# Pagination
+# ---------------------------------------------------------------------------
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+# ---------------------------------------------------------------------------
+# Incident Core Types
+# ---------------------------------------------------------------------------
+
+"""The primary incident record in Rootly."""
+type Incident {
+  id: ID!
+  title: String!
+  summary: IncidentSummary
+  status: IncidentStatus
+  severity: IncidentSeverity
+  incidentType: IncidentType
+  environments: [IncidentEnvironment!]
+  teams: [IncidentTeam!]
+  services: [IncidentService!]
+  functionalities: [IncidentFunctionality!]
+  timestamps: IncidentTimestamps
+  customFields: [IncidentCustomField!]
+  tags: [IncidentTag!]
+  labels: [IncidentLabel!]
+  attachments: [IncidentAttachment!]
+  links: [IncidentLink!]
+  timeline: Timeline
+  actionItems: [ActionItem!]
+  retrospective: Retrospective
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  resolvedAt: DateTime
+  createdBy: User
+  assignedTo: User
+}
+
+type IncidentConnection {
+  nodes: [Incident!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""The lifecycle state of an incident."""
+type IncidentStatus {
+  id: ID!
+  name: String!
+  description: String
+  color: String
+  category: String
+  position: Int
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""The severity level assigned to an incident."""
+type IncidentSeverity {
+  id: ID!
+  name: String!
+  description: String
+  color: String
+  priority: Int!
+  notifyEmails: [String!]
+  slackChannel: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""The deployment environment affected by an incident."""
+type IncidentEnvironment {
+  id: ID!
+  name: String!
+  description: String
+  slug: String
+  position: Int
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A team assigned to work on an incident."""
+type IncidentTeam {
+  id: ID!
+  name: String!
+  slug: String
+  description: String
+  members: [User!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A service impacted by an incident."""
+type IncidentService {
+  id: ID!
+  name: String!
+  description: String
+  slug: String
+  color: String
+  severity: ServiceSeverity
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A product functionality affected by an incident."""
+type IncidentFunctionality {
+  id: ID!
+  name: String!
+  description: String
+  slug: String
+  color: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Key timestamps in the incident lifecycle."""
+type IncidentTimestamps {
+  started: DateTime
+  detected: DateTime
+  acknowledged: DateTime
+  mitigating: DateTime
+  resolved: DateTime
+  closed: DateTime
+}
+
+"""A custom field attached to an incident."""
+type IncidentCustomField {
+  id: ID!
+  name: String!
+  slug: String
+  fieldType: String
+  value: JSON
+  required: Boolean
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A free-form tag applied to an incident."""
+type IncidentTag {
+  id: ID!
+  name: String!
+  color: String
+  createdAt: DateTime!
+}
+
+"""A key-value label applied to an incident."""
+type IncidentLabel {
+  id: ID!
+  key: String!
+  value: String!
+}
+
+"""An AI-generated or manually authored incident summary."""
+type IncidentSummary {
+  id: ID!
+  content: String!
+  generatedBy: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A file or screenshot attached to an incident."""
+type IncidentAttachment {
+  id: ID!
+  filename: String!
+  contentType: String
+  url: String!
+  size: Int
+  uploadedBy: User
+  createdAt: DateTime!
+}
+
+"""An external URL linked from an incident."""
+type IncidentLink {
+  id: ID!
+  href: String!
+  title: String
+  createdAt: DateTime!
+}
+
+"""A classification type for incidents."""
+type IncidentType {
+  id: ID!
+  name: String!
+  description: String
+  template: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Action Items
+# ---------------------------------------------------------------------------
+
+"""A follow-up task arising from an incident or retrospective."""
+type ActionItem {
+  id: ID!
+  title: String!
+  description: String
+  status: ActionItemStatus
+  assignee: ActionItemAssignee
+  dueDate: DateTime
+  completedAt: DateTime
+  incident: Incident
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type ActionItemConnection {
+  nodes: [ActionItem!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""The current lifecycle state of an action item."""
+type ActionItemStatus {
+  id: ID!
+  name: String!
+  category: String
+  position: Int
+}
+
+"""The user or team responsible for completing an action item."""
+type ActionItemAssignee {
+  user: User
+  team: Team
+}
+
+# ---------------------------------------------------------------------------
+# Timeline
+# ---------------------------------------------------------------------------
+
+"""The ordered sequence of events for an incident."""
+type Timeline {
+  id: ID!
+  incidentId: ID!
+  entries: [TimelineEntry!]!
+}
+
+"""A single event or note within an incident timeline."""
+type TimelineEntry {
+  id: ID!
+  description: String!
+  occurredAt: DateTime!
+  source: EntrySource
+  createdBy: User
+  attachments: [IncidentAttachment!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""The origin of a timeline entry."""
+type EntrySource {
+  type: String!
+  name: String
+  integrationName: String
+  url: String
+}
+
+# ---------------------------------------------------------------------------
+# Automations
+# ---------------------------------------------------------------------------
+
+"""An automation rule that fires actions in response to incident events."""
+type Automation {
+  id: ID!
+  name: String!
+  description: String
+  enabled: Boolean!
+  trigger: AutomationTrigger
+  conditions: [AutomationCondition!]
+  actions: [AutomationAction!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type AutomationConnection {
+  nodes: [Automation!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""The event that triggers an automation rule."""
+type AutomationTrigger {
+  id: ID!
+  type: String!
+  params: JSON
+}
+
+"""An action performed when an automation fires."""
+type AutomationAction {
+  id: ID!
+  type: String!
+  params: JSON
+  position: Int
+}
+
+"""A condition that must be satisfied for an automation to fire."""
+type AutomationCondition {
+  id: ID!
+  attribute: String!
+  operator: String!
+  value: JSON
+}
+
+# ---------------------------------------------------------------------------
+# On-Call and Scheduling
+# ---------------------------------------------------------------------------
+
+"""Current on-call state snapshot."""
+type OnCall {
+  id: ID!
+  schedule: OnCallSchedule
+  user: User
+  startsAt: DateTime
+  endsAt: DateTime
+}
+
+"""A named on-call coverage schedule."""
+type OnCallSchedule {
+  id: ID!
+  name: String!
+  description: String
+  timezone: String
+  rotations: [Rotation!]
+  currentOnCall: OnCall
+  escalationPolicy: EscalationPolicy
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type OnCallScheduleConnection {
+  nodes: [OnCallSchedule!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""A rotation layer within an on-call schedule."""
+type Rotation {
+  id: ID!
+  name: String!
+  type: String
+  handoffTime: String
+  handoffDay: String
+  participants: [RotationParticipant!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A user or team participating in an on-call rotation."""
+type RotationParticipant {
+  id: ID!
+  user: User
+  team: Team
+  position: Int
+}
+
+"""An ordered policy for escalating unacknowledged incidents."""
+type EscalationPolicy {
+  id: ID!
+  name: String!
+  description: String
+  rules: [EscalationRule!]
+  repeatCount: Int
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A single escalation step within an escalation policy."""
+type EscalationRule {
+  id: ID!
+  position: Int!
+  delayMinutes: Int!
+  notifyType: String
+  user: User
+  team: Team
+  schedule: OnCallSchedule
+}
+
+# ---------------------------------------------------------------------------
+# Users and Teams
+# ---------------------------------------------------------------------------
+
+"""A Rootly platform user."""
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  details: UserDetails
+  role: UserRole
+  teams: [Team!]
+  slackUserId: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type UserConnection {
+  nodes: [User!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""Extended profile information for a user."""
+type UserDetails {
+  avatarUrl: String
+  timezone: String
+  phoneNumber: String
+  title: String
+  department: String
+}
+
+"""The RBAC role assigned to a user."""
+type UserRole {
+  id: ID!
+  name: String!
+  permissions: [String!]
+}
+
+"""A group of users within the Rootly organization."""
+type Team {
+  id: ID!
+  name: String!
+  slug: String
+  description: String
+  details: TeamDetails
+  members: [User!]
+  escalationPolicy: EscalationPolicy
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type TeamConnection {
+  nodes: [Team!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""Extended metadata for a team."""
+type TeamDetails {
+  color: String
+  slackChannelId: String
+  slackChannelName: String
+  notifyEmails: [String!]
+}
+
+# ---------------------------------------------------------------------------
+# Services and Environments
+# ---------------------------------------------------------------------------
+
+"""A software service tracked in Rootly."""
+type Service {
+  id: ID!
+  name: String!
+  description: String
+  slug: String
+  color: String
+  severity: ServiceSeverity
+  team: Team
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type ServiceConnection {
+  nodes: [Service!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""The default severity mapping for a service."""
+type ServiceSeverity {
+  id: ID!
+  severity: IncidentSeverity
+  service: Service
+}
+
+"""A deployment environment tracked in Rootly."""
+type Environment {
+  id: ID!
+  name: String!
+  description: String
+  slug: String
+  color: String
+  position: Int
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type EnvironmentConnection {
+  nodes: [Environment!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+# ---------------------------------------------------------------------------
+# Workflows and Runbooks
+# ---------------------------------------------------------------------------
+
+"""A structured incident response workflow."""
+type Workflow {
+  id: ID!
+  name: String!
+  description: String
+  enabled: Boolean!
+  trigger: AutomationTrigger
+  steps: [PlaybookStep!]
+  runbook: Runbook
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type WorkflowConnection {
+  nodes: [Workflow!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""An individual step within a workflow or playbook."""
+type PlaybookStep {
+  id: ID!
+  position: Int!
+  title: String!
+  description: String
+  actionType: String
+  params: JSON
+  conditions: [AutomationCondition!]
+}
+
+"""A reference runbook document linked to workflows."""
+type Runbook {
+  id: ID!
+  name: String!
+  description: String
+  url: String
+  content: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Retrospectives and Postmortems
+# ---------------------------------------------------------------------------
+
+"""A post-incident retrospective record."""
+type Retrospective {
+  id: ID!
+  incident: Incident
+  title: String!
+  sections: [PostmortemSection!]
+  completedAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A named section within a retrospective document."""
+type PostmortemSection {
+  id: ID!
+  title: String!
+  content: String
+  position: Int
+  required: Boolean
+}
+
+# ---------------------------------------------------------------------------
+# Dashboards and Widgets
+# ---------------------------------------------------------------------------
+
+"""A named metrics or status dashboard."""
+type Dashboard {
+  id: ID!
+  name: String!
+  description: String
+  widgets: [Widget!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type DashboardConnection {
+  nodes: [Dashboard!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""A visual component within a dashboard."""
+type Widget {
+  id: ID!
+  title: String!
+  widgetType: String!
+  config: WidgetConfig
+  position: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Configuration parameters for a dashboard widget."""
+type WidgetConfig {
+  metricType: String
+  filters: JSON
+  groupBy: [String!]
+  timeRange: String
+  chartType: String
+}
+
+# ---------------------------------------------------------------------------
+# Webhooks and Integrations
+# ---------------------------------------------------------------------------
+
+"""A webhook subscription configured in Rootly."""
+type Webhook {
+  id: ID!
+  name: String!
+  enabled: Boolean!
+  endpoint: WebhookEndpoint
+  events: [String!]
+  secret: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type WebhookConnection {
+  nodes: [Webhook!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""A target URL for webhook delivery."""
+type WebhookEndpoint {
+  id: ID!
+  url: String!
+  httpMethod: String
+  headers: JSON
+}
+
+"""A third-party integration configured in Rootly."""
+type Integration {
+  id: ID!
+  name: String!
+  integrationType: String!
+  enabled: Boolean!
+  config: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type IntegrationConnection {
+  nodes: [Integration!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""Slack workspace integration settings."""
+type Slack {
+  id: ID!
+  workspaceName: String!
+  workspaceId: String!
+  botToken: String
+  defaultChannelId: String
+  defaultChannelName: String
+  enabled: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""PagerDuty integration settings."""
+type PagerDuty {
+  id: ID!
+  subdomain: String!
+  apiKey: String
+  defaultServiceId: String
+  enabled: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""OpsGenie integration settings."""
+type OpsGenie {
+  id: ID!
+  apiKey: String
+  region: String
+  defaultTeamId: String
+  enabled: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Authentication
+# ---------------------------------------------------------------------------
+
+"""An API key credential for programmatic access to Rootly."""
+type APIKey {
+  id: ID!
+  name: String!
+  keyPrefix: String!
+  scopes: [String!]
+  lastUsedAt: DateTime
+  expiresAt: DateTime
+  createdAt: DateTime!
+}
+
+type APIKeyConnection {
+  nodes: [APIKey!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""A short-lived bearer token for authentication."""
+type Token {
+  id: ID!
+  accessToken: String!
+  tokenType: String!
+  expiresIn: Int
+  scope: String
+  createdAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Input Types
+# ---------------------------------------------------------------------------
+
+input CreateIncidentInput {
+  title: String!
+  statusId: ID
+  severityId: ID
+  incidentTypeId: ID
+  environmentIds: [ID!]
+  teamIds: [ID!]
+  serviceIds: [ID!]
+  functionalityIds: [ID!]
+  summary: String
+  labels: [LabelInput!]
+  tags: [String!]
+}
+
+input UpdateIncidentInput {
+  title: String
+  statusId: ID
+  severityId: ID
+  incidentTypeId: ID
+  environmentIds: [ID!]
+  teamIds: [ID!]
+  serviceIds: [ID!]
+  functionalityIds: [ID!]
+  summary: String
+}
+
+input LabelInput {
+  key: String!
+  value: String!
+}
+
+input CreateTimelineEntryInput {
+  description: String!
+  occurredAt: DateTime!
+}
+
+input CreateActionItemInput {
+  title: String!
+  description: String
+  statusId: ID
+  assigneeUserId: ID
+  assigneeTeamId: ID
+  dueDate: DateTime
+  incidentId: ID
+}
+
+input IncidentFilters {
+  statusCategory: String
+  severityId: ID
+  environmentId: ID
+  teamId: ID
+  serviceId: ID
+  createdAfter: DateTime
+  createdBefore: DateTime
+  search: String
+}
+
+# ---------------------------------------------------------------------------
+# Queries
+# ---------------------------------------------------------------------------
+
+type Query {
+  """Fetch a single incident by ID."""
+  incident(id: ID!): Incident
+
+  """List incidents with optional filters and pagination."""
+  incidents(filters: IncidentFilters, first: Int, after: String): IncidentConnection!
+
+  """Fetch a single action item by ID."""
+  actionItem(id: ID!): ActionItem
+
+  """List action items."""
+  actionItems(incidentId: ID, first: Int, after: String): ActionItemConnection!
+
+  """Fetch a user by ID."""
+  user(id: ID!): User
+
+  """List all users."""
+  users(first: Int, after: String): UserConnection!
+
+  """Fetch a team by ID."""
+  team(id: ID!): Team
+
+  """List all teams."""
+  teams(first: Int, after: String): TeamConnection!
+
+  """Fetch a service by ID."""
+  service(id: ID!): Service
+
+  """List all services."""
+  services(first: Int, after: String): ServiceConnection!
+
+  """Fetch an environment by ID."""
+  environment(id: ID!): Environment
+
+  """List all environments."""
+  environments(first: Int, after: String): EnvironmentConnection!
+
+  """Fetch an on-call schedule by ID."""
+  onCallSchedule(id: ID!): OnCallSchedule
+
+  """List all on-call schedules."""
+  onCallSchedules(first: Int, after: String): OnCallScheduleConnection!
+
+  """Fetch an escalation policy by ID."""
+  escalationPolicy(id: ID!): EscalationPolicy
+
+  """Fetch an automation rule by ID."""
+  automation(id: ID!): Automation
+
+  """List all automation rules."""
+  automations(first: Int, after: String): AutomationConnection!
+
+  """Fetch a workflow by ID."""
+  workflow(id: ID!): Workflow
+
+  """List all workflows."""
+  workflows(first: Int, after: String): WorkflowConnection!
+
+  """Fetch a dashboard by ID."""
+  dashboard(id: ID!): Dashboard
+
+  """List all dashboards."""
+  dashboards(first: Int, after: String): DashboardConnection!
+
+  """Fetch a webhook by ID."""
+  webhook(id: ID!): Webhook
+
+  """List all webhooks."""
+  webhooks(first: Int, after: String): WebhookConnection!
+
+  """List all integrations."""
+  integrations(first: Int, after: String): IntegrationConnection!
+
+  """List API keys for the current user."""
+  apiKeys(first: Int, after: String): APIKeyConnection!
+}
+
+# ---------------------------------------------------------------------------
+# Mutations
+# ---------------------------------------------------------------------------
+
+type Mutation {
+  """Create a new incident."""
+  createIncident(input: CreateIncidentInput!): IncidentPayload!
+
+  """Update an existing incident."""
+  updateIncident(id: ID!, input: UpdateIncidentInput!): IncidentPayload!
+
+  """Resolve an incident."""
+  resolveIncident(id: ID!): IncidentPayload!
+
+  """Add a timeline entry to an incident."""
+  createTimelineEntry(incidentId: ID!, input: CreateTimelineEntryInput!): TimelineEntryPayload!
+
+  """Create a new action item."""
+  createActionItem(input: CreateActionItemInput!): ActionItemPayload!
+
+  """Update an action item."""
+  updateActionItem(id: ID!, input: CreateActionItemInput!): ActionItemPayload!
+
+  """Delete an action item."""
+  deleteActionItem(id: ID!): DeletePayload!
+}
+
+# ---------------------------------------------------------------------------
+# Payload Types
+# ---------------------------------------------------------------------------
+
+type IncidentPayload {
+  incident: Incident
+  errors: [String!]
+}
+
+type TimelineEntryPayload {
+  entry: TimelineEntry
+  errors: [String!]
+}
+
+type ActionItemPayload {
+  actionItem: ActionItem
+  errors: [String!]
+}
+
+type DeletePayload {
+  success: Boolean!
+  errors: [String!]
+}
