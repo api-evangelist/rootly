@@ -3,7 +3,7 @@ name: Rootly
 description: Rootly is an incident management platform that automates incident response
   workflows and integrates with existing tools.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - AIOps
 - Incident Management
