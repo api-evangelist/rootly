@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://security.rootly.com/
+url: https://security.rootly.com/
+certifications:
+- SOC 2
+- GDPR
+evidence:
+- source: https://security.rootly.com/
+  keywords:
+  - soc 2
+  - trust center
+  - gdpr

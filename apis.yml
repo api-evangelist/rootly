@@ -27,6 +27,16 @@ apis:
   - url: graphql/rootly-graphql.md
     type: GraphQL
 common:
+- type: TrustCenter
+  url: security/rootly-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/rootly-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/rootly-domain-security.yml
+- type: Authentication
+  url: authentication/rootly-authentication.yml
+- url: https://rootly.com/blog/rss.xml
+  type: Blog
 - type: GitHubOrganization
   url: https://github.com/rootlyhq
 - type: LinkedIn
