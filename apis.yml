@@ -27,6 +27,8 @@ apis:
   - url: graphql/rootly-graphql.md
     type: GraphQL
 common:
+- type: AgenticAccess
+  url: agentic-access/rootly-agentic-access.yml
 - type: TrustCenter
   url: security/rootly-trust-center.yml
 - type: VulnerabilityDisclosure
