@@ -8,6 +8,6 @@ schemes:
 - name: bearerAuth
   type: http
   scheme: bearer
-  description: 'Bearer token authentication. Pass your API token as `Authorization: Bearer YOUR-TOKEN`.'
+  description: 'Bearer token authentication. Pass your API token as `Authorization: Bearer [example key]`.'
   sources:
   - openapi/rootly-openapi.yml
