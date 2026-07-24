@@ -1,0 +1,169 @@
+openapi: 3.1.0
+info:
+  title: Rootly Alerts API
+  description: Minimal OpenAPI description of the Rootly incident management REST API.
+  version: 1.0.0
+  x-generated-from: https://docs.rootly.com/llms.txt
+  x-generated-by: claude-crawl-2026-05-08
+servers:
+- url: https://api.rootly.com/v1
+  description: Rootly production API
+security:
+- bearerAuth: []
+tags:
+- name: Alerts
+paths:
+  /alerts:
+    get:
+      tags:
+      - Alerts
+      summary: List alerts
+      parameters:
+      - $ref: '#/components/parameters/PageNumber'
+      - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+    post:
+      tags:
+      - Alerts
+      summary: Create alert
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+  /alerts/{id}:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    get:
+      tags:
+      - Alerts
+      summary: Get alert
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+    patch:
+      tags:
+      - Alerts
+      summary: Update alert
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+  /alerts/{id}/acknowledge:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    post:
+      tags:
+      - Alerts
+      summary: Acknowledge alert
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+  /alerts/{id}/resolve:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    post:
+      tags:
+      - Alerts
+      summary: Resolve alert
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+components:
+  parameters:
+    PageNumber:
+      name: page[number]
+      in: query
+      description: Page number for pagination
+      schema:
+        type: integer
+        minimum: 1
+    PageSize:
+      name: page[size]
+      in: query
+      description: Number of items per page
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 200
+    Id:
+      name: id
+      in: path
+      required: true
+      description: Resource identifier
+      schema:
+        type: string
+  schemas:
+    Collection:
+      type: object
+      description: Generic JSON:API collection document.
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+        meta:
+          type: object
+          additionalProperties: true
+        links:
+          type: object
+          additionalProperties: true
+      additionalProperties: true
+    Resource:
+      type: object
+      description: Generic JSON:API resource document.
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+            type:
+              type: string
+            attributes:
+              type: object
+              additionalProperties: true
+            relationships:
+              type: object
+              additionalProperties: true
+      additionalProperties: true
+  requestBodies:
+    Generic:
+      description: Generic JSON:API request body
+      required: true
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Resource'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Bearer token authentication. Pass your API token as `Authorization: Bearer YOUR-TOKEN`.'

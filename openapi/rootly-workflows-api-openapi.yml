@@ -1,0 +1,123 @@
+openapi: 3.1.0
+info:
+  title: Rootly Alerts Workflows API
+  description: Minimal OpenAPI description of the Rootly incident management REST API.
+  version: 1.0.0
+  x-generated-from: https://docs.rootly.com/llms.txt
+  x-generated-by: claude-crawl-2026-05-08
+servers:
+- url: https://api.rootly.com/v1
+  description: Rootly production API
+security:
+- bearerAuth: []
+tags:
+- name: Workflows
+paths:
+  /workflows:
+    get:
+      tags:
+      - Workflows
+      summary: List workflows
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+    post:
+      tags:
+      - Workflows
+      summary: Create workflow
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+  /workflows/{id}:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    get:
+      tags:
+      - Workflows
+      summary: Get workflow
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+    patch:
+      tags:
+      - Workflows
+      summary: Update workflow
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+components:
+  schemas:
+    Resource:
+      type: object
+      description: Generic JSON:API resource document.
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+            type:
+              type: string
+            attributes:
+              type: object
+              additionalProperties: true
+            relationships:
+              type: object
+              additionalProperties: true
+      additionalProperties: true
+    Collection:
+      type: object
+      description: Generic JSON:API collection document.
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+        meta:
+          type: object
+          additionalProperties: true
+        links:
+          type: object
+          additionalProperties: true
+      additionalProperties: true
+  requestBodies:
+    Generic:
+      description: Generic JSON:API request body
+      required: true
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Resource'
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      description: Resource identifier
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Bearer token authentication. Pass your API token as `Authorization: Bearer YOUR-TOKEN`.'
