@@ -1,0 +1,26 @@
+{
+  "provider": "rootly",
+  "sources": [
+    "rootly-alerts-api-openapi.yml",
+    "rootly-escalation-policies-api-openapi.yml",
+    "rootly-incidents-api-openapi.yml",
+    "rootly-services-api-openapi.yml",
+    "rootly-teams-api-openapi.yml",
+    "rootly-users-api-openapi.yml",
+    "rootly-workflows-api-openapi.yml"
+  ],
+  "outputs": [
+    "rootly-alerts-api-openapi.yml",
+    "rootly-escalation-policies-api-openapi.yml",
+    "rootly-incidents-api-openapi.yml",
+    "rootly-services-api-openapi.yml",
+    "rootly-teams-api-openapi.yml",
+    "rootly-users-api-openapi.yml",
+    "rootly-workflows-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
