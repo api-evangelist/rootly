@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Rootly Alerts Escalation Policies API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Escalation Policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List escalation policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.rootly.com/v1/escalation-policies"
+          },
+          "docs": "List escalation policies"
+        },
+        {
+          "info": {
+            "name": "Create escalation policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.rootly.com/v1/escalation-policies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create escalation policy"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
