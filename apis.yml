@@ -82,6 +82,8 @@ apis:
   description: The Teams API from Rootly — 2 operation(s) for teams.
   humanURL: https://rootly.com
   tags:
+  - Team
+  tags_raw:
   - Teams
   properties:
   - type: OpenAPI
@@ -95,6 +97,8 @@ apis:
   description: The Users API from Rootly — 2 operation(s) for users.
   humanURL: https://rootly.com
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
