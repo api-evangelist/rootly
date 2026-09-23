@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Rootly Alerts API
   description: Minimal OpenAPI description of the Rootly incident management REST API.
@@ -28,6 +28,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Collection'
+      operationId: getAlerts
+      x-operation-id-source: derived
     post:
       tags:
       - Alerts
@@ -41,6 +43,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Resource'
+      operationId: postAlerts
+      x-operation-id-source: derived
   /alerts/{id}:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -55,6 +59,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Resource'
+      operationId: getAlertsById
+      x-operation-id-source: derived
     patch:
       tags:
       - Alerts
@@ -68,6 +74,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Resource'
+      operationId: patchAlertsById
+      x-operation-id-source: derived
   /alerts/{id}/acknowledge:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -82,6 +90,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Resource'
+      operationId: postAlertsByIdAcknowledge
+      x-operation-id-source: derived
   /alerts/{id}/resolve:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -96,6 +106,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Resource'
+      operationId: postAlertsByIdResolve
+      x-operation-id-source: derived
 components:
   parameters:
     PageNumber:
@@ -105,6 +117,13 @@ components:
       schema:
         type: integer
         minimum: 1
+    Id:
+      name: id
+      in: path
+      required: true
+      description: Resource identifier
+      schema:
+        type: string
     PageSize:
       name: page[size]
       in: query
@@ -113,29 +132,7 @@ components:
         type: integer
         minimum: 1
         maximum: 200
-    Id:
-      name: id
-      in: path
-      required: true
-      description: Resource identifier
-      schema:
-        type: string
   schemas:
-    Collection:
-      type: object
-      description: Generic JSON:API collection document.
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Resource'
-        meta:
-          type: object
-          additionalProperties: true
-        links:
-          type: object
-          additionalProperties: true
-      additionalProperties: true
     Resource:
       type: object
       description: Generic JSON:API resource document.
@@ -153,6 +150,21 @@ components:
             relationships:
               type: object
               additionalProperties: true
+      additionalProperties: true
+    Collection:
+      type: object
+      description: Generic JSON:API collection document.
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+        meta:
+          type: object
+          additionalProperties: true
+        links:
+          type: object
+          additionalProperties: true
       additionalProperties: true
   requestBodies:
     Generic:

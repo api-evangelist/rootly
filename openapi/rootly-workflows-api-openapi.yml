@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Rootly Alerts Workflows API
+  title: Rootly Workflows API
   description: Minimal OpenAPI description of the Rootly incident management REST API.
   version: 1.0.0
   x-generated-from: https://docs.rootly.com/llms.txt
@@ -25,6 +25,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Collection'
+      operationId: getWorkflows
+      x-operation-id-source: derived
     post:
       tags:
       - Workflows
@@ -38,6 +40,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Resource'
+      operationId: postWorkflows
+      x-operation-id-source: derived
   /workflows/{id}:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -52,6 +56,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Resource'
+      operationId: getWorkflowsById
+      x-operation-id-source: derived
     patch:
       tags:
       - Workflows
@@ -65,7 +71,17 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Resource'
+      operationId: patchWorkflowsById
+      x-operation-id-source: derived
 components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      description: Resource identifier
+      schema:
+        type: string
   schemas:
     Resource:
       type: object
@@ -108,14 +124,6 @@ components:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/Resource'
-  parameters:
-    Id:
-      name: id
-      in: path
-      required: true
-      description: Resource identifier
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

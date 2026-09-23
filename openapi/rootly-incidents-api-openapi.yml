@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Rootly Alerts Incidents API
+  title: Rootly Incidents API
   description: Minimal OpenAPI description of the Rootly incident management REST API.
   version: 1.0.0
   x-generated-from: https://docs.rootly.com/llms.txt
@@ -28,6 +28,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Collection'
+      operationId: getIncidents
+      x-operation-id-source: derived
     post:
       tags:
       - Incidents
@@ -41,6 +43,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Resource'
+      operationId: postIncidents
+      x-operation-id-source: derived
   /incidents/{id}:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -55,6 +59,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Resource'
+      operationId: getIncidentsById
+      x-operation-id-source: derived
     patch:
       tags:
       - Incidents
@@ -68,6 +74,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Resource'
+      operationId: patchIncidentsById
+      x-operation-id-source: derived
     delete:
       tags:
       - Incidents
@@ -75,6 +83,8 @@ paths:
       responses:
         '204':
           description: No content
+      operationId: deleteIncidentsById
+      x-operation-id-source: derived
   /incidents/{id}/mitigate:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -89,6 +99,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Resource'
+      operationId: postIncidentsByIdMitigate
+      x-operation-id-source: derived
   /incidents/{id}/resolve:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -103,6 +115,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Resource'
+      operationId: postIncidentsByIdResolve
+      x-operation-id-source: derived
 components:
   parameters:
     PageNumber:
@@ -112,6 +126,13 @@ components:
       schema:
         type: integer
         minimum: 1
+    Id:
+      name: id
+      in: path
+      required: true
+      description: Resource identifier
+      schema:
+        type: string
     PageSize:
       name: page[size]
       in: query
@@ -120,29 +141,7 @@ components:
         type: integer
         minimum: 1
         maximum: 200
-    Id:
-      name: id
-      in: path
-      required: true
-      description: Resource identifier
-      schema:
-        type: string
   schemas:
-    Collection:
-      type: object
-      description: Generic JSON:API collection document.
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Resource'
-        meta:
-          type: object
-          additionalProperties: true
-        links:
-          type: object
-          additionalProperties: true
-      additionalProperties: true
     Resource:
       type: object
       description: Generic JSON:API resource document.
@@ -160,6 +159,21 @@ components:
             relationships:
               type: object
               additionalProperties: true
+      additionalProperties: true
+    Collection:
+      type: object
+      description: Generic JSON:API collection document.
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+        meta:
+          type: object
+          additionalProperties: true
+        links:
+          type: object
+          additionalProperties: true
       additionalProperties: true
   requestBodies:
     Generic:

@@ -1,13 +1,7 @@
 {
   "provider": "rootly",
   "sources": [
-    "rootly-alerts-api-openapi.yml",
-    "rootly-escalation-policies-api-openapi.yml",
-    "rootly-incidents-api-openapi.yml",
-    "rootly-services-api-openapi.yml",
-    "rootly-teams-api-openapi.yml",
-    "rootly-users-api-openapi.yml",
-    "rootly-workflows-api-openapi.yml"
+    "_ae-authored/rootly-openapi.yml"
   ],
   "outputs": [
     "rootly-alerts-api-openapi.yml",
@@ -21,6 +15,18 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "rootly-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "rootly-alerts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rootly-escalation-policies-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rootly-incidents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rootly-services-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rootly-teams-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rootly-users-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rootly-workflows-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

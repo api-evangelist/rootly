@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Rootly Alerts Users API
+  title: Rootly Users API
   description: Minimal OpenAPI description of the Rootly incident management REST API.
   version: 1.0.0
   x-generated-from: https://docs.rootly.com/llms.txt
@@ -25,6 +25,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Collection'
+      operationId: getUsers
+      x-operation-id-source: derived
   /users/{id}:
     parameters:
     - $ref: '#/components/parameters/Id'
@@ -39,6 +41,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Resource'
+      operationId: getUsersById
+      x-operation-id-source: derived
     patch:
       tags:
       - Users
@@ -52,8 +56,41 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Resource'
+      operationId: patchUsersById
+      x-operation-id-source: derived
 components:
+  requestBodies:
+    Generic:
+      description: Generic JSON:API request body
+      required: true
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Resource'
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      description: Resource identifier
+      schema:
+        type: string
   schemas:
+    Collection:
+      type: object
+      description: Generic JSON:API collection document.
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+        meta:
+          type: object
+          additionalProperties: true
+        links:
+          type: object
+          additionalProperties: true
+      additionalProperties: true
     Resource:
       type: object
       description: Generic JSON:API resource document.
@@ -72,37 +109,6 @@ components:
               type: object
               additionalProperties: true
       additionalProperties: true
-    Collection:
-      type: object
-      description: Generic JSON:API collection document.
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Resource'
-        meta:
-          type: object
-          additionalProperties: true
-        links:
-          type: object
-          additionalProperties: true
-      additionalProperties: true
-  requestBodies:
-    Generic:
-      description: Generic JSON:API request body
-      required: true
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/Resource'
-  parameters:
-    Id:
-      name: id
-      in: path
-      required: true
-      description: Resource identifier
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http
