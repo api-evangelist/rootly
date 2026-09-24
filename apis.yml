@@ -48,8 +48,6 @@ apis:
     url: openapi/rootly-alerts-api-openapi.yml
   - type: Documentation
     url: https://rootly.com/docs
-  - type: GraphQL
-    url: graphql/rootly-graphql.md
 - aid: rootly:rootly-escalation-policies-api
   name: Rootly Escalation Policies API
   description: The Escalation Policies API from Rootly — 1 operation(s) for escalation policies.
@@ -61,8 +59,6 @@ apis:
     url: openapi/rootly-escalation-policies-api-openapi.yml
   - type: Documentation
     url: https://rootly.com/docs
-  - type: GraphQL
-    url: graphql/rootly-graphql.md
 - aid: rootly:rootly-incidents-api
   name: Rootly Incidents API
   description: The Incidents API from Rootly — 4 operation(s) for incidents.
@@ -74,8 +70,6 @@ apis:
     url: openapi/rootly-incidents-api-openapi.yml
   - type: Documentation
     url: https://rootly.com/docs
-  - type: GraphQL
-    url: graphql/rootly-graphql.md
 - aid: rootly:rootly-services-api
   name: Rootly Services API
   description: The Services API from Rootly — 2 operation(s) for services.
@@ -87,8 +81,6 @@ apis:
     url: openapi/rootly-services-api-openapi.yml
   - type: Documentation
     url: https://rootly.com/docs
-  - type: GraphQL
-    url: graphql/rootly-graphql.md
 - aid: rootly:rootly-teams-api
   name: Rootly Teams API
   description: The Teams API from Rootly — 2 operation(s) for teams.
@@ -102,8 +94,6 @@ apis:
     url: openapi/rootly-teams-api-openapi.yml
   - type: Documentation
     url: https://rootly.com/docs
-  - type: GraphQL
-    url: graphql/rootly-graphql.md
 - aid: rootly:rootly-users-api
   name: Rootly Users API
   description: The Users API from Rootly — 2 operation(s) for users.
@@ -117,8 +107,6 @@ apis:
     url: openapi/rootly-users-api-openapi.yml
   - type: Documentation
     url: https://rootly.com/docs
-  - type: GraphQL
-    url: graphql/rootly-graphql.md
 - aid: rootly:rootly-workflows-api
   name: Rootly Workflows API
   description: The Workflows API from Rootly — 2 operation(s) for workflows.
@@ -130,8 +118,6 @@ apis:
     url: openapi/rootly-workflows-api-openapi.yml
   - type: Documentation
     url: https://rootly.com/docs
-  - type: GraphQL
-    url: graphql/rootly-graphql.md
 common:
 - type: AgenticAccess
   url: agentic-access/rootly-agentic-access.yml
