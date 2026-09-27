@@ -59,14 +59,6 @@ paths:
       operationId: patchUsersById
       x-operation-id-source: derived
 components:
-  requestBodies:
-    Generic:
-      description: Generic JSON:API request body
-      required: true
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/Resource'
   parameters:
     Id:
       name: id
@@ -75,6 +67,14 @@ components:
       description: Resource identifier
       schema:
         type: string
+  requestBodies:
+    Generic:
+      description: Generic JSON:API request body
+      required: true
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Resource'
   schemas:
     Collection:
       type: object

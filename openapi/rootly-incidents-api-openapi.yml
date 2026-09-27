@@ -141,7 +141,30 @@ components:
         type: integer
         minimum: 1
         maximum: 200
+  requestBodies:
+    Generic:
+      description: Generic JSON:API request body
+      required: true
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Resource'
   schemas:
+    Collection:
+      type: object
+      description: Generic JSON:API collection document.
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+        meta:
+          type: object
+          additionalProperties: true
+        links:
+          type: object
+          additionalProperties: true
+      additionalProperties: true
     Resource:
       type: object
       description: Generic JSON:API resource document.
@@ -160,29 +183,6 @@ components:
               type: object
               additionalProperties: true
       additionalProperties: true
-    Collection:
-      type: object
-      description: Generic JSON:API collection document.
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Resource'
-        meta:
-          type: object
-          additionalProperties: true
-        links:
-          type: object
-          additionalProperties: true
-      additionalProperties: true
-  requestBodies:
-    Generic:
-      description: Generic JSON:API request body
-      required: true
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/Resource'
   securitySchemes:
     bearerAuth:
       type: http
