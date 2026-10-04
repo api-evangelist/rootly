@@ -109,22 +109,30 @@ paths:
       operationId: postAlertsByIdResolve
       x-operation-id-source: derived
 components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      description: Resource identifier
+      schema:
+        type: string
+    PageSize:
+      name: page[size]
+      in: query
+      description: Number of items per page
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 200
+    PageNumber:
+      name: page[number]
+      in: query
+      description: Page number for pagination
+      schema:
+        type: integer
+        minimum: 1
   schemas:
-    Collection:
-      type: object
-      description: Generic JSON:API collection document.
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Resource'
-        meta:
-          type: object
-          additionalProperties: true
-        links:
-          type: object
-          additionalProperties: true
-      additionalProperties: true
     Resource:
       type: object
       description: Generic JSON:API resource document.
@@ -143,29 +151,21 @@ components:
               type: object
               additionalProperties: true
       additionalProperties: true
-  parameters:
-    PageSize:
-      name: page[size]
-      in: query
-      description: Number of items per page
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 200
-    Id:
-      name: id
-      in: path
-      required: true
-      description: Resource identifier
-      schema:
-        type: string
-    PageNumber:
-      name: page[number]
-      in: query
-      description: Page number for pagination
-      schema:
-        type: integer
-        minimum: 1
+    Collection:
+      type: object
+      description: Generic JSON:API collection document.
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+        meta:
+          type: object
+          additionalProperties: true
+        links:
+          type: object
+          additionalProperties: true
+      additionalProperties: true
   requestBodies:
     Generic:
       description: Generic JSON:API request body

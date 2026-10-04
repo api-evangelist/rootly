@@ -74,22 +74,23 @@ paths:
       operationId: patchWorkflowsById
       x-operation-id-source: derived
 components:
-  schemas:
-    Collection:
-      type: object
-      description: Generic JSON:API collection document.
-      properties:
-        data:
-          type: array
-          items:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      description: Resource identifier
+      schema:
+        type: string
+  requestBodies:
+    Generic:
+      description: Generic JSON:API request body
+      required: true
+      content:
+        application/vnd.api+json:
+          schema:
             $ref: '#/components/schemas/Resource'
-        meta:
-          type: object
-          additionalProperties: true
-        links:
-          type: object
-          additionalProperties: true
-      additionalProperties: true
+  schemas:
     Resource:
       type: object
       description: Generic JSON:API resource document.
@@ -108,22 +109,21 @@ components:
               type: object
               additionalProperties: true
       additionalProperties: true
-  parameters:
-    Id:
-      name: id
-      in: path
-      required: true
-      description: Resource identifier
-      schema:
-        type: string
-  requestBodies:
-    Generic:
-      description: Generic JSON:API request body
-      required: true
-      content:
-        application/vnd.api+json:
-          schema:
+    Collection:
+      type: object
+      description: Generic JSON:API collection document.
+      properties:
+        data:
+          type: array
+          items:
             $ref: '#/components/schemas/Resource'
+        meta:
+          type: object
+          additionalProperties: true
+        links:
+          type: object
+          additionalProperties: true
+      additionalProperties: true
   securitySchemes:
     bearerAuth:
       type: http
