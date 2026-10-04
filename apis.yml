@@ -32,6 +32,7 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/rootly.png
 tags:
 - AIOps
 - Incident Management
+- Incident Response
 url: https://raw.githubusercontent.com/api-evangelist/rootly/refs/heads/main/apis.yml
 created: '2026-03-27'
 modified: '2026-05-19'
@@ -119,6 +120,9 @@ apis:
   - type: Documentation
     url: https://rootly.com/docs
 common:
+- type: CapabilityMap
+  url: capabilities/rootly-capability-edges.yml
+  name: Rootly Business Capability Map
 - type: AgenticAccess
   url: agentic-access/rootly-agentic-access.yml
 - type: TrustCenter
