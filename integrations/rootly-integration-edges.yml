@@ -4,6 +4,7 @@ checked:
 - https://github.com/marketplace?type=actions
 - https://github.com/marketplace?type=apps
 - https://marketplace.atlassian.com/
+- https://registry.modelcontextprotocol.io/v0/servers
 - okta/integrations/okta-integration-edges.yml
 marketplace_apps: []
 edges:
@@ -59,6 +60,38 @@ edges:
   publisher_name: Rootly
   detected_by: sweep-devtools.py
   detected: '2026-10-14'
+- partner_name: MCP Registry
+  partner: mcp
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://registry.modelcontextprotocol.io/v0/servers?search=com.rootly
+  contract_reference:
+    register: registry.modelcontextprotocol.io
+    spec_file: null
+    role: mcp-server-listing
+    registered_name: com.rootly/mcp-server
+    register_id: com.rootly/mcp-server
+    detected_by: sweep-agent-tools.py
+    detected: '2026-10-14'
+  mcp_registry:
+    servers:
+    - com.rootly/mcp-server
+    hosted_remote: 1
+    local_package: 1
+    transports:
+      sse: 1
+      stdio: 1
+    auth_declared: 1
+    catalog_declared: false
+    namespace_domains:
+    - rootly.com
+  matched_by:
+  - namespace-domain
+  detected_by: sweep-agent-tools.py
+  first_seen: '2026-10-14'
 - partner_name: Okta (own)
   partner: okta
   partner_match: mirror
