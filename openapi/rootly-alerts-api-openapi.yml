@@ -109,29 +109,14 @@ paths:
       operationId: postAlertsByIdResolve
       x-operation-id-source: derived
 components:
-  parameters:
-    Id:
-      name: id
-      in: path
+  requestBodies:
+    Generic:
+      description: Generic JSON:API request body
       required: true
-      description: Resource identifier
-      schema:
-        type: string
-    PageSize:
-      name: page[size]
-      in: query
-      description: Number of items per page
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 200
-    PageNumber:
-      name: page[number]
-      in: query
-      description: Page number for pagination
-      schema:
-        type: integer
-        minimum: 1
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Resource'
   schemas:
     Resource:
       type: object
@@ -166,14 +151,29 @@ components:
           type: object
           additionalProperties: true
       additionalProperties: true
-  requestBodies:
-    Generic:
-      description: Generic JSON:API request body
+  parameters:
+    PageSize:
+      name: page[size]
+      in: query
+      description: Number of items per page
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 200
+    PageNumber:
+      name: page[number]
+      in: query
+      description: Page number for pagination
+      schema:
+        type: integer
+        minimum: 1
+    Id:
+      name: id
+      in: path
       required: true
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/Resource'
+      description: Resource identifier
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http
