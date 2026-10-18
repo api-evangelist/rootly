@@ -1,6 +1,10 @@
 generated: '2026-10-14'
 method: searched
 checked:
+- https://connectors.airbyte.com/files/registries/v0/cloud_registry.json
+- https://connectors.airbyte.com/files/registries/v0/oss_registry.json
+- https://fivetran.com/docs-sitemap.xml
+- https://fivetran.com/docs/connectors/partner-built-program
 - https://focus.finops.org/data-generators/
 - https://github.com/cncf/k8s-conformance
 - https://github.com/cncf/landscape
@@ -179,6 +183,62 @@ edges:
     builder: unknown (not in the directory record)
   detected_by: sweep-workflow-automation.py
   first_seen: '2026-10-15'
+- partner_name: Airbyte
+  partner: airbyte
+  partner_match: aggregator
+  type: marketplace
+  marketplace: airbyte-registry
+  channel: elt-connector
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://docs.airbyte.com/integrations/sources/rootly
+  category: null
+  contract_reference:
+    register: Airbyte connector registry (connectors.airbyte.com cloud_registry.json + oss_registry.json)
+    spec_file: null
+    role: elt-connector:airbyte-community
+    registered_name: Rootly
+    matched_domain: rootly.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    connectors:
+    - airbyte/source-rootly
+    support_level:
+    - community
+    release_stage:
+    - alpha
+    in_cloud: true
+    builder: unknown (community connector; contributor not in the record)
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+- partner_name: Fivetran
+  partner: fivetran
+  partner_match: aggregator
+  type: marketplace
+  marketplace: fivetran-connectors
+  channel: elt-connector
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://fivetran.com/docs/connectors/applications/rootly
+  category: null
+  contract_reference:
+    register: Fivetran connectors (fivetran.com/docs/connectors, docs-sitemap.xml + Partner-Built program)
+    spec_file: null
+    role: elt-connector:fivetran
+    registered_name: Rootly
+    matched_domain: rootly.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    connector_paths:
+    - connectors/applications/rootly
+    vendor_link: https://rootly.com/
+    builder: Fivetran
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
 source:
 - https://github.com/marketplace?type=actions
 - https://github.com/marketplace?type=apps
