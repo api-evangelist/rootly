@@ -22,6 +22,9 @@ checked:
 - pulumi/integrations/pulumi-integration-edges.yml
 - terraform/integrations/terraform-integration-edges.yml
 - backstage/integrations/backstage-integration-edges.yml
+- https://aur.archlinux.org/cgit/aur.git/tree/.SRCINFO
+- https://aur.archlinux.org/packages-meta-ext-v1.json.gz
+- https://aur.archlinux.org/rpc/v5/info
 marketplace_apps: []
 edges:
 - partner_name: GitHub Marketplace (apps)
@@ -391,6 +394,40 @@ edges:
   detected: '2026-10-22'
   detected_by: mirror-platform-listings.py
   category: Monitoring
+- partner_name: Arch User Repository (AUR)
+  partner: null
+  partner_match: null
+  type: register
+  direction: provider-built
+  category: official CLI (Arch User Repository (AUR))
+  evidence: https://aur.archlinux.org/packages/rootly-cli-git
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Arch User Repository (AUR) (public package index)
+    spec_file: null
+    packages:
+    - name: rootly-cli-git
+      kind: aur
+      version: r115.91c3fd6-1
+      released: '2026-09-30'
+      released_field: AUR LastModified
+      out_of_date: false
+      lapsed: false
+      page: https://aur.archlinux.org/packages/rootly-cli-git
+      upstream: https://github.com/rootlyhq/rootly-cli
+      cli: 'AUR description: Manage Rootly incidents, alerts, services, teams and on-call schedules from the '
+      repo_leg: github-org:rootlyhq
+      publisher_leg: artifact-github-org:rootlyhq
+      matched_by: github-org
+    current: true
+    signal_note: 'the provider''s own command-line tool packaged for Arch Linux (community-maintained PKGBUILD whose
+      upstream and source artifact are the provider''s): distribution, not an integration; lapsed = flagged out-of-date
+      or not updated in 24 months'
+    detected_by: sweep-aur-vendor-cli-packages.py
+    detected: '2026-10-23'
+  detected_by: sweep-aur-vendor-cli-packages.py
+  first_seen: '2026-10-23'
 source:
 - https://github.com/marketplace?type=actions
 - https://github.com/marketplace?type=apps
